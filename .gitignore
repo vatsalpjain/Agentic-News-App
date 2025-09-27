@@ -1,0 +1,41 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+
+# uv lockfile (optional)
+uv.lock
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+
+# IDE/system files
+.DS_Store
+.idea/
+.vscode/
+
+# Log and test output
+*.log
+
+# RAG vector DB and database files
+chroma/
+chromadb/
+vectorstore/
+vectordb/
+db/
+data/*.db
+data/*.duckdb
+*.faiss
+*.parquet
+*.sqlite3
+*.ann
+*.pkl
+*.bin
+*.jsonl
