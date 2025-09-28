@@ -1,22 +1,34 @@
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyMuPDFLoader
 import requests
 from bs4 import BeautifulSoup
+import logging
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 def scrape_bbc_headlines():
-    url = "https://www.bbc.com/news"
-    response = requests.get(url)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-    documents = []
-    for heading in soup.select("h3"):
-        content = heading.get_text(strip=True)
-        documents.append({
-            'page_content': content,
-            'metadata': {'source': 'BBC'}
-        })
-    return documents
+    try:
+        url = "https://www.bbc.com/news"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        documents = []
+        for heading in soup.select("h3"):
+            content = heading.get_text(strip=True)
+            documents.append({
+                'page_content': content,
+                'metadata': {'source': 'BBC'}
+            })
+        return documents
+    except requests.RequestException as e:
+        logger.error(f"Failed to fetch BBC headlines: {e}")
+        return []
 
 def process_all_docs(data_directory):
+    data_path = Path(data_directory)
+    if not data_path.exists():
+        logger.warning(f"Directory not found: {data_directory}")
+        return []
     all_documents = []
     try:
         # Load local TXT documents

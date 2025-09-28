@@ -1,47 +1,46 @@
-from .data_ingestion import process_all_docs, scrape_bbc_headlines, search_documents
-from .chunking import split_documents
+import asyncio
+import logging
+from .pipeline import NewsPipeline
 from .embedding import EmbeddingManager
 from .vectorstore import VectorStore
-from .retriever import RAGRetriever
-from .llm_interface import llm, rag_simple
+from .mcp.server import NewsServer
+from .utils.logging_config import setup_logging
 
+logger = logging.getLogger(__name__)
 
-def main():
-    query = "who is Donald Trump?"
-    
-    # Load local + BBC news documents
-    docs = process_all_docs('C:/dev/work/NSDC/RAGapp/data/all_files')
-    
-    # Search loaded documents for the query string
-    search_results = search_documents(docs, query, max_results=5)
-    print(f"\nSearch Results for '{query}':")
-    for doc in search_results:
-        print("-", doc['page_content'] if isinstance(doc, dict) else doc.page_content)
-    
-    # Split documents into chunks for embedding
-    chunks = split_documents(docs)
-    
-    # Generate embeddings for chunks
-    embedder = EmbeddingManager()
-    embeddings = embedder.generate_embeddings([chunk.page_content for chunk in chunks])
-    
-    # Initialize vectorstore and add documents+embeddings
-    store = VectorStore()
-    store.add_documents(chunks, embeddings)
-    
-    # Setup retriever
-    retriever = RAGRetriever(store, embedder)
-    
-    # Run RAG query against vectorstore
-    answer = rag_simple(query, retriever, llm)
-    print("\nRAG answer:", answer)
-    
-    # Optionally display BBC headlines fetched separately
-    bbc_headlines = scrape_bbc_headlines()
-    print("\nBBC News Headlines:")
-    for doc in bbc_headlines:
-        print("-", doc['page_content'])
+async def periodic_refresh(pipeline):
+    while True:
+        try:
+            await asyncio.sleep(3600)  # Refresh every hour
+            await pipeline.refresh_news()
+        except Exception as e:
+            logger.error(f"Error in periodic refresh: {e}")
 
-if __name__ == '__main__':
-    main()
+async def main():
+    try:
+        setup_logging()
+        logger.info("Starting NewsRag application")
+        
+        # Initialize components
+        embedding_manager = EmbeddingManager()
+        vector_store = VectorStore()
+        pipeline = NewsPipeline(vector_store, embedding_manager)
+        
+        # Create server with pipeline
+        server = NewsServer(pipeline=pipeline)
+        
+        # Initial news refresh
+        await pipeline.refresh_news()
+        
+        # Start everything
+        await asyncio.gather(
+            server.start(),
+            periodic_refresh(pipeline)
+        )
+    except Exception as e:
+        logger.error(f"Application failed: {e}")
+        raise
+
+if __name__ == "__main__":
+    asyncio.run(main())
 

@@ -1,41 +1,103 @@
 # Python-generated files
 __pycache__/
-*.py[oc]
+*.py[cod]
+*.so
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
+.eggs/
+*.egg
 
 # Virtual environments
-.venv
+.venv/
+venv/
+ENV/
+env/
 .env
 
-# uv lockfile (optional)
+# Package manager files
 uv.lock
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
 
 # Jupyter/IPython
 .ipynb_checkpoints/
+*.ipynb_meta
+notebook_version/*.ipynb
 
-# IDE/system files
-.DS_Store
-.idea/
-.vscode/
-
-# Log and test output
+# Logs and databases
+logs/
 *.log
+data/*.db
+data/*.duckdb
+data/vector_store/*.sqlite3
+data/vector_store/*.bin
+data/vector_store/*.pkl
+data/vector_store_logs/
 
-# RAG vector DB and database files
+# Vector store and embeddings
 chroma/
 chromadb/
 vectorstore/
 vectordb/
 db/
-data/*.db
-data/*.duckdb
 *.faiss
 *.parquet
-*.sqlite3
 *.ann
-*.pkl
 *.bin
 *.jsonl
+
+# Model files and caches
+models/
+.cache/
+sentence-transformers/
+transformers/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+nosetests.xml
+coverage.xml
+
+# FastAPI
+__pycache__
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Production files
+prod_settings.py
+prod.env
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+.*.swp
+*~.nib
+
+# Operating System
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

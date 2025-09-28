@@ -1,20 +1,15 @@
 import numpy as np
 import chromadb 
 import uuid
-from typing import List
 import os
+from typing import List
 from langchain_core.documents import Document
-from .llm_interface import llm, rag_simple
-from .data_ingestion import process_all_docs
-
-#USE
-#vectorstore=VectorStore()
 
 # Vector Store
 class VectorStore:
     """Manages documents embedding in a chromaDB vector store """
 
-    def __init__(self,collection_name: str = "pdf_documents",persist_directory: str = "../data/vector_store"):
+    def __init__(self, collection_name: str = "pdf_documents", persist_directory: str = "data/vector_store"):
         self.collection_name = collection_name
         self.persist_directory = persist_directory
         self.client = None
