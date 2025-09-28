@@ -1,9 +1,9 @@
-#📰 Agentic AI News App
+# 📰 Agentic AI News App
 An Agentic AI-powered news aggregator that searches the web and fetches news from multiple APIs, then summarizes and ranks top articles with the power of LLMs + embeddings + vector storage.
 
 Built for curious minds who want real-time, reliable, and contextual news insights. 🔍✨
 
-🚀 Features
+## 🚀 Features
 🌍 Multi-source Aggregation – Fetches top stories from news APIs and real-time web search.
 
 🤖 AI-powered Answers – Query any topic and get curated summaries with source links.
@@ -14,7 +14,7 @@ Built for curious minds who want real-time, reliable, and contextual news insigh
 
 🗂 Vector-powered Memory – Stores embeddings in ChromaDB for efficient retrieval.
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 LLM: Gemma-8B 🧠
 
 Embeddings: MiniLM (for semantic search with Tavily)
@@ -25,7 +25,7 @@ Retriever Tool: Tavily 🌐
 
 Orchestration: Agentic AI workflows (tools + reasoning)
 
-🔄 Workflow
+## 🔄 Workflow
 1️⃣ User enters a topic or question.
 2️⃣ Agent triggers:
 
@@ -36,14 +36,10 @@ Orchestration: Agentic AI workflows (tools + reasoning)
 4️⃣ Gemma-8B LLM → Summarize + rank results.
 5️⃣ 🎯 Output a clean list of articles + insights.
 
-💡 Example Use Cases
+## 💡 Example Use Cases
 🔬 “AI advancements in 2025” → Curated list of top-rated articles.
 
-📉 “Why is the stock market crashing?” → Multi-source explanation.
-
-🗳 “Latest on global elections” → Real-time coverage with summaries.
-
-⚙️ Installation
+## ⚙️ Installation
 Clone the repository:
 
 bash
@@ -64,26 +60,4 @@ bash
 Enter a topic: "Climate Change"
 Ask a contextual query:
 
-bash
-Question: "What are world leaders saying about climate change this week?"
-🗺️ Roadmap
- 🎨 Add Streamlit / React front-end dashboard.
-
- 🧾 Reliability scoring & bias detection.
-
- 🔔 Personalized news tracking & alerts.
-
- 📈 Advanced analytics for trends over time.
-
-📂 Project Structure
-text
-agentic-ai-news-app/
-│── agents/          # Agent & tool definitions  
-│── retrievers/      # Web & API retrieval logic  
-│── storage/         # ChromaDB integration  
-│── summarizer/      # LLM summarization pipelines  
-│── app.py           # Main entry point  
-│── requirements.txt # Dependencies  
-│── README.md        # Documentation  
-
-🔥 With Agentic AI News App, stay ahead of the curve with smarter, faster, and more reliable news insights.
+## 🔥 With Agentic AI News App, stay ahead of the curve with smarter, faster, and more reliable news insights.
